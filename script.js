@@ -1,25 +1,26 @@
 const redBox = document.getElementById('red-box');
 const greenBox = document.getElementById('green-box');
+const boxSize = 120;
 
-const boxSize = 120; // Size of the box (width and height)
-const viewportWidth = window.innerWidth;
-const viewportHeight = window.innerHeight;
+function getViewportSize() {
+    return {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+}
 
-let moveTimeout;
-
-// Function to generate a random position that does not overlap with the green box
 function getRandomPosition() {
+    const { width, height } = getViewportSize();
     let x, y;
 
     do {
-        x = Math.random() * (viewportWidth - boxSize);
-        y = Math.random() * (viewportHeight - boxSize);
+        x = Math.random() * (width - boxSize);
+        y = Math.random() * (height - boxSize);
     } while (isOverlapping(x, y, greenBox.offsetLeft, greenBox.offsetTop));
 
     return { x, y };
 }
 
-// Function to check if the red box overlaps with the green box
 function isOverlapping(x1, y1, x2, y2) {
     return !(x1 > x2 + boxSize ||
              x1 + boxSize < x2 ||
@@ -27,43 +28,42 @@ function isOverlapping(x1, y1, x2, y2) {
              y1 + boxSize < y2);
 }
 
-// Move the red box with a delay when mouse hovers over it or when clicked
 function moveRedBox() {
     const { x, y } = getRandomPosition();
     redBox.style.left = `${x}px`;
     redBox.style.top = `${y}px`;
 }
 
-// Handle movement when mouse is over the box
 function handleMouseOver() {
-    // Clear any previous timeout
     clearTimeout(moveTimeout);
-    
-    // Set a new timeout to move the red box
     moveTimeout = setTimeout(() => {
         moveRedBox();
-    }, 300); // Move after 0.3 seconds for faster movement
+    }, 300);
 }
 
-// Mouseover event handler
-redBox.addEventListener('mouseover', handleMouseOver);
-
-// Mouseout event handler
-redBox.addEventListener('mouseout', () => {
-    // Clear any scheduled move
+// Handle touch events for mobile devices
+function handleTouchStart() {
     clearTimeout(moveTimeout);
-});
-
-// Click event handler
-redBox.addEventListener('click', () => {
-    // Clear any previous timeout
-    clearTimeout(moveTimeout);
-    
-    // Move immediately when clicked
     moveRedBox();
-});
+}
 
-// Show an alert when clicking the green box
+// Add event listeners
+redBox.addEventListener('mouseover', handleMouseOver);
+redBox.addEventListener('mouseout', () => {
+    clearTimeout(moveTimeout);
+});
+redBox.addEventListener('click', moveRedBox);
+redBox.addEventListener('touchstart', handleTouchStart);
+
 greenBox.addEventListener('click', () => {
     alert('te amo muito minha princesa maravilhosa UwU');
+});
+greenBox.addEventListener('touchstart', () => {
+    alert('te amo muito minha princesa maravilhosa UwU');
+});
+
+// Adjust viewport size on resize
+window.addEventListener('resize', () => {
+    viewportWidth = window.innerWidth;
+    viewportHeight = window.innerHeight;
 });
