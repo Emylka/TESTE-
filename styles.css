@@ -11,9 +11,13 @@ body {
 
 .title {
     font-size: 24px;
-    margin-bottom: 20px; /* Adjust this to create space between the title and the boxes */
+    position: absolute; /* Fix the title at the top of the page */
+    top: 10px; /* Adjust this value to move the title down from the very top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
     color: #333;
-    position: relative; /* Ensure it’s positioned relative to the document flow */
+    margin: 0;
+    z-index: 10; /* Ensure the title is above other elements */
 }
 
 .box, .green-box {
@@ -40,22 +44,13 @@ body {
 
 .green-box {
     background-color: green;
-    top: 80%; /* Positioned towards the bottom */
-    left: 80%; /* Positioned towards the right */
-    transform: translate(-50%, -50%); /* Centering */
+    top: calc(100px + 20px); /* Adjusted to be below the title */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
 }
 
 /* Media Query for Mobile Devices */
 @media (max-width: 600px) {
-    body {
-        flex-direction: column; /* Stack items vertically */
-    }
-
-    .title {
-        font-size: 18px;
-        margin-bottom: 10px; /* Adjust margin to create space */
-    }
-
     .box, .green-box {
         width: 100px; /* Slightly smaller size on mobile */
         height: 100px;
@@ -65,5 +60,11 @@ body {
     .green-box {
         position: static; /* Remove absolute positioning */
         margin-top: 10px; /* Ensure space below the title */
+        top: auto; /* Reset top property */
+    }
+
+    .title {
+        font-size: 18px;
+        top: 10px; /* Ensure it remains at the top */
     }
 }
