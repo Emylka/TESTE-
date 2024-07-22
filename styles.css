@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    position: relative; /* Needed for absolute positioning of children */
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.box, .green-box {
+    width: 120px; /* Size of the box */
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    border: 2px solid transparent; /* Border for better button effect */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    position: absolute; /* Absolute positioning */
+    transition: left 0.5s ease, top 0.5s ease; /* Faster transition for movement */
+}
+
+.box {
+    background-color: lightcoral;
+    top: 20px; /* Initial position */
+    left: 20px; /* Initial position */
+}
+
+.green-box {
+    background-color: green;
+    top: 50%; /* Centered vertically */
+    left: 80%; /* Positioned towards the right */
+    transform: translate(-50%, -50%); /* Centering */
+}
+
+/* Optional: Add hover effect for buttons */
+.box:hover, .green-box:hover {
+    background-color: #333; /* Darker shade on hover for better visibility */
+    color: #fff;
+}
